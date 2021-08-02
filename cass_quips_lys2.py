@@ -194,8 +194,8 @@ def interactive(opt):
     print(ed_model)
     print(bst_model)
 
-    # update convai overrides
-    #args to change: download_path, datapath, model_file, parlai_home
+    # update convai options
+    # args to change: download_path, datapath, model_file, parlai_home, override
     over_convai = {
                    'download_path': opt['download_path'],
                    'datapath': opt['datapath'],
@@ -205,6 +205,7 @@ def interactive(opt):
                                  'task': 'convai2'}
                    }   
     
+    #updates to empathetic dialogue options
     over_ed = {
                'download_path': opt['download_path'],
                'datapath': opt['datapath'],
@@ -213,7 +214,7 @@ def interactive(opt):
                'override': {'model_file': ed_model}
                
                }   
-
+    # updates to blended skill talk options
     over_bst = {
                 'download_path': opt['download_path'],
                 'datapath': opt['datapath'],
