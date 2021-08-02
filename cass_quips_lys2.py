@@ -11,6 +11,13 @@ from parlai.core.build_data import modelzoo_path
 from parlai.core.params import get_model_name
 
 import random
+import os
+
+
+# note: assume that ParlAI has been installed into home
+path = os.path.expanduser('~/ParlAI')
+print(path)
+os.chdir(path)
 
 
 class CassQuipWorld():
@@ -247,7 +254,7 @@ def interactive(opt):
     
 
 
-@register_script('city_quips', aliases=['cq'])
+@register_script('cass_quips', aliases=['cq'])
 class Interactive(ParlaiScript):
     @classmethod
     def setup_args(cls):
