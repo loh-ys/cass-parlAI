@@ -25,26 +25,93 @@ class CassQuipWorld():
     human_agent = None
     models = None
     models_labels = None
+    suggestions = []
     
-    def __init__(self, human_agent, models, models_labels):
+    def __init__(self, human_agent, models, models_labels, suggestions = [], response = None):
         self.human_agent = human_agent
         self.models = models
         self.models_labels = models_labels
+        self.suggestions = suggestions
+        self.response = response
 
 
     def parley(self):
+        self.suggestions = []
 
-        human_input = self.human_agent.act()
-        suggestions = []
-                    
-        for model in self.models:
-            model.observe(human_input)
-            suggestion = model.act()
-            suggestions.append(suggestion['text'])
+        if self.response is None:
+            human_input = self.human_agent.act()
+                        
+            for model in self.models:
+                model.observe(human_input)
+                suggestion = model.act()
+                self.suggestions.append(suggestion['text'])
 
-        print("CassQuips suggestions:")
-        for i in range(len(self.models)):
-            print(self.models_labels[i] + ": " +  suggestions[i])           
+            print("CassQuips suggestions:")
+            for i in range(len(self.models)):
+                print(self.models_labels[i] + ": " +  self.suggestions[i])    
+
+        else:
+            input = self.response['response']
+
+            for model in self.models:
+                model.observe(input)
+                suggestion = model.act()
+                self.suggestions.append(suggestion['text'])
+
+            print("CassQuips suggestions:")
+            for i in range(len(self.models)):
+                print(self.models_labels[i] + ": " +  self.suggestions[i])    
+
+    def preference(self):       
+        self.response = {'choice': None,
+                         'response': None}
+
+        print('Select a preferred response or input a personalised response')
+        print(f"""
+                Type 'A' for {self.models_labels[0]},
+                Type 'B' for {self.models_labels[1]},
+                Type 'C' for {self.models_labels[2]},
+                Type 'D' to enter your own input
+                """)
+
+        user_input = input()
+
+        if user_input == 'A':
+            response = self.suggestions[0]
+            print(f'Response: {response}')
+
+            self.response['choice'] = user_input
+            self.response['response'] = response
+
+
+        elif user_input == 'B':
+            response = self.suggestions[1]
+            print(f'Response: {response}')
+
+            self.response['choice'] = user_input
+            self.response['response'] = response
+        
+        elif user_input == 'C':
+            response = self.suggestions[2]
+            print(f'Response: {response}')
+
+            self.response['choice'] = user_input
+            self.response['response'] = response
+
+        elif user_input == 'D':
+            print('Please enter your reply:')
+            response = input()
+
+            print(f'Response: {response}')
+
+            self.response['choice'] = user_input
+            self.response['response'] = response
+
+        else:
+            print('Invalid input')
+            #### NEED SOME ERROR HANDLING
+
+        
             
     
 
@@ -194,8 +261,8 @@ def interactive(opt):
     print(ed_model)
     print(bst_model)
 
-    # update convai options
-    # args to change: download_path, datapath, model_file, parlai_home, override
+    # update convai overrides
+    #args to change: download_path, datapath, model_file, parlai_home
     over_convai = {
                    'download_path': opt['download_path'],
                    'datapath': opt['datapath'],
@@ -205,7 +272,6 @@ def interactive(opt):
                                  'task': 'convai2'}
                    }   
     
-    #updates to empathetic dialogue options
     over_ed = {
                'download_path': opt['download_path'],
                'datapath': opt['datapath'],
@@ -214,7 +280,7 @@ def interactive(opt):
                'override': {'model_file': ed_model}
                
                }   
-    # updates to blended skill talk options
+
     over_bst = {
                 'download_path': opt['download_path'],
                 'datapath': opt['datapath'],
@@ -247,6 +313,8 @@ def interactive(opt):
     keep_suggesting = True
     while(keep_suggesting):
         cass_quips.parley()
+        cass_quips.preference()
+
         user_input = input("")
         if user_input == "EXIT":
             keep_suggesting = False
