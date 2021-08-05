@@ -1,4 +1,5 @@
 import random
+from pathlib import Path
 import os
 
 import pandas as pd
@@ -55,11 +56,12 @@ class CassQuipWorld():
         log = {'choice': [self.response['choice']],
                    'text': [self.response['text']]}    
 
-        print(log)
+        #print(log)
 
         # append this to existing dataframe
         self.out_log = self.out_log.append(log, ignore_index = True)        
-        print(self.out_log)
+        
+        #print(log)
 
         
 
@@ -301,6 +303,7 @@ def setup_args(parser=None):
 
 
 def interactive(opt):
+
     if isinstance(opt, ParlaiParser):
         logging.error('interactive should be passed opt not Parser')
         opt = opt.parse_args()
@@ -385,11 +388,13 @@ def interactive(opt):
         print("Press Enter to continue, type EXIT to stop and record chat logs")
         user_input = input("")
         if user_input == "EXIT":
+            #create cass_folder directory in ParlAi directory
+            Path(cass_quips.log_path).mkdir(exist_ok= True)
+
             out_path = cass_quips.log_path + '/recent_chat.csv'
 
             print(f'Exporting chat logs to: {out_path}')
-            cass_quips.out_log.to_csv(out_path)
-
+            cass_quips.out_log.to_csv(out_path, mode = 'a') #a mode: appends to file if it exists
             print('Shutting down...')
 
             keep_suggesting = False
