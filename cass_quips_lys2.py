@@ -183,7 +183,7 @@ class CassQuipWorld():
             
     
 
-
+# convai
 # python parlai/scripts/interactive.py -mf zoo:pretrained_transformers/model_poly/model -t convai2
 opt_convai = {'init_opt': None, 'task': 'convai2', 'download_path': '/home/ahmad/ParlAI/downloads', 'loglevel': 'success', 
               'datatype': 'train', 'image_mode': 'raw', 'hide_labels': False, 'multitask_weights': [1], 'batchsize': 1, 
@@ -218,7 +218,7 @@ opt_convai = {'init_opt': None, 'task': 'convai2', 'download_path': '/home/ahmad
               'override': {'model_file': '/home/ahmad/ParlAI/data/models/pretrained_transformers/model_poly/model', 'task': 'convai2'}, ## CHANGE MODEL PATH
               'starttime': 'Aug24_12-51'}
 
-
+# ed
 #python parlai interactive -mf zoo:dodecadialogue/empathetic_dialogues_ft/model
 opt_ed = {'init_opt': None, 'task': 'interactive', 'download_path': '/home/ahmad/ParlAI/downloads', 'loglevel': 'info', 
           'datatype': 'train', 'image_mode': 'raw', 'hide_labels': False, 'multitask_weights': [1], 'batchsize': 1, 
@@ -249,7 +249,7 @@ opt_ed = {'init_opt': None, 'task': 'interactive', 'download_path': '/home/ahmad
           'include_image_token': True, 'image_fusion_type': 'late', 'parlai_home': '/home/ahmad/ParlAI', 
           'override': {'model_file': '/home/ahmad/ParlAI/data/models/dodecadialogue/empathetic_dialogues_ft/model'}, 'starttime': 'Aug24_14-42'}
 
-
+# bst
 # python parlai interactive -mf zoo:blended_skill_talk/bst_single_task/model -t blended_skill_talk
 opt_bst = {'init_opt': None, 'task': 'blended_skill_talk', 'download_path': '/home/ahmad/ParlAI/downloads', 'loglevel': 'info', 
             'datatype': 'train', 'image_mode': 'raw', 'hide_labels': False, 'multitask_weights': [1], 'batchsize': 1, 'dynamic_batching': None, 
@@ -283,6 +283,70 @@ opt_bst = {'init_opt': None, 'task': 'blended_skill_talk', 'download_path': '/ho
             'safe_personas_only': True, 'parlai_home': '/home/ahmad/ParlAI', 
             'override': {'model_file': '/home/ahmad/ParlAI/data/models/blended_skill_talk/bst_single_task/model', 'task': 'blended_skill_talk'}, 
             'starttime': 'Aug24_13-01'}
+# eli5 
+#parlai interactive -mf zoo:dialogue_unlikelihood/rep_eli5_ctxt_and_label/model -m projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent
+opt_eli5 = {'init_opt': None, 'allow_missing_init_opts': False, 'task': 'interactive', 'download_path': None, 
+            'loglevel': 'info', 'datatype': 'train', 'image_mode': 'raw', 'hide_labels': False, 'multitask_weights': [1], 
+            'batchsize': 1, 'dynamic_batching': None, 'verbose': False, 'is_debug': False, 'datapath': '/home/dell/ParlAI/data', 
+            'model': 'projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent', 
+            'model_file': '/home/dell/ParlAI/data/models/dialogue_unlikelihood/rep_eli5_ctxt_and_label/model', 
+            'init_model': None, 'dict_class': 'parlai.core.dict:DictionaryAgent', 'display_examples': False, 'display_prettify': False, 
+            'display_add_fields': '', 'interactive_task': True, 'outfile': '', 'save_format': 'conversations', 
+            'local_human_candidates_file': None, 'single_turn': False, 'log_keep_fields': 'all', 'image_size': 256, 'image_cropsize': 224, 
+            'embedding_size': 300, 'n_layers': 2, 'ffn_size': 300, 'dropout': 0.0, 'attention_dropout': 0.0, 'relu_dropout': 0.0, 'n_heads': 2, 
+            'learn_positional_embeddings': False, 'embeddings_scale': True, 'n_positions': None, 'n_segments': 0, 'variant': 'aiayn', 
+            'activation': 'relu', 'output_scaling': 1.0, 'share_word_embeddings': True, 'n_encoder_layers': -1, 'n_decoder_layers': -1, 
+            'model_parallel': False, 'beam_size': 1, 'beam_min_length': 1, 'beam_context_block_ngram': -1, 'beam_block_ngram': -1, 
+            'beam_block_full_context': True, 'beam_length_penalty': 0.65, 'skip_generation': False, 'inference': 'greedy', 'topk': 10, 
+            'topp': 0.9, 'beam_delay': 30, 'beam_block_list_filename': None, 'temperature': 1.0, 'compute_tokenized_bleu': False, 
+            'interactive_mode': True, 'embedding_type': 'random', 'embedding_projection': 'random', 'fp16': False, 'fp16_impl': 'safe', 
+            'force_fp16_tokens': False, 'optimizer': 'sgd', 'learningrate': 1, 'gradient_clip': 0.1, 'adam_eps': 1e-08, 
+            'adafactor_eps': (1e-30, 0.001), 'momentum': 0, 'nesterov': True, 'nus': (0.7,), 'betas': (0.9, 0.999), 'weight_decay': None, 
+            'rank_candidates': False, 'truncate': -1, 'text_truncate': None, 'label_truncate': None, 'history_reversed': False, 'history_size': -1, 
+            'person_tokens': False, 'split_lines': False, 'use_reply': 'label', 'add_p1_after_newln': False, 'delimiter': '\n', 
+            'history_add_global_end_token': None, 'special_tok_lst': None, 'gpu': -1, 'no_cuda': False, 'dict_file': None, 'dict_initpath': None, 
+            'dict_language': 'english', 'dict_max_ngram_size': -1, 'dict_minfreq': 0, 'dict_maxtokens': -1, 'dict_nulltoken': '__null__', 
+            'dict_starttoken': '__start__', 'dict_endtoken': '__end__', 'dict_unktoken': '__unk__', 'dict_tokenizer': 're', 'dict_lower': False, 
+            'bpe_debug': False, 'dict_textfields': 'text,labels', 'bpe_vocab': None, 'bpe_merge': None, 'bpe_add_prefix_space': None, 'bpe_dropout': None, 
+            'lr_scheduler': 'reduceonplateau', 'lr_scheduler_patience': 3, 'lr_scheduler_decay': 0.5, 'invsqrt_lr_decay_gamma': -1, 'warmup_updates': -1, 
+            'warmup_rate': 0.0001, 'update_freq': 1, 'image_features_dim': 2048, 'image_encoder_num_layers': 1, 'n_image_tokens': 1, 'n_image_channels': 1, 
+            'include_image_token': True, 'image_fusion_type': 'late', 'seq_ul_ratio': 0.5, 'seq_ul_n': 4, 'mask_n': 100, 'ctxt_beta': 0.5, 
+            'crep_pen': 'crep', 'parlai_home': '/home/dell/ParlAI', 
+            'override': {'model_file': '/home/dell/ParlAI/data/models/dialogue_unlikelihood/rep_eli5_ctxt_and_label/model', 'model': 'projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent'}, 
+            'starttime': 'Aug06_01-41'}
+
+# wizard of wikipedia
+# parlai interactive -mf zoo:dialogue_unlikelihood/rep_wiki_ctxt_and_label/model -m projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent
+opt_wow = {'init_opt': None, 'allow_missing_init_opts': False, 'task': 'interactive', 'download_path': None, 'loglevel': 'info', 
+           'datatype': 'train', 'image_mode': 'raw', 'hide_labels': False, 'multitask_weights': [1], 'batchsize': 1, 'dynamic_batching': None, 
+           'verbose': False, 'is_debug': False, 'datapath': '/home/dell/ParlAI/data', 
+           'model': 'projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent', 
+           'model_file': '/home/dell/ParlAI/data/models/dialogue_unlikelihood/rep_wiki_ctxt_and_label/model', 'init_model': None, 
+           'dict_class': 'parlai.core.dict:DictionaryAgent', 'display_examples': False, 'display_prettify': False, 'display_add_fields': '', 
+           'interactive_task': True, 'outfile': '', 'save_format': 'conversations', 'local_human_candidates_file': None, 
+           'single_turn': False, 'log_keep_fields': 'all', 'image_size': 256, 'image_cropsize': 224, 'embedding_size': 300, 'n_layers': 2, 
+           'ffn_size': 300, 'dropout': 0.0, 'attention_dropout': 0.0, 'relu_dropout': 0.0, 'n_heads': 2, 'learn_positional_embeddings': False, 
+           'embeddings_scale': True, 'n_positions': None, 'n_segments': 0, 'variant': 'aiayn', 'activation': 'relu', 'output_scaling': 1.0, 
+           'share_word_embeddings': True, 'n_encoder_layers': -1, 'n_decoder_layers': -1, 'model_parallel': False, 'beam_size': 1, 
+           'beam_min_length': 1, 'beam_context_block_ngram': -1, 'beam_block_ngram': -1, 'beam_block_full_context': True, 
+           'beam_length_penalty': 0.65, 'skip_generation': False, 'inference': 'greedy', 'topk': 10, 'topp': 0.9, 'beam_delay': 30, 
+           'beam_block_list_filename': None, 'temperature': 1.0, 'compute_tokenized_bleu': False, 'interactive_mode': True, 
+           'embedding_type': 'random', 'embedding_projection': 'random', 'fp16': False, 'fp16_impl': 'safe', 'force_fp16_tokens': False, 
+           'optimizer': 'sgd', 'learningrate': 1, 'gradient_clip': 0.1, 'adam_eps': 1e-08, 'adafactor_eps': (1e-30, 0.001), 'momentum': 0, 
+           'nesterov': True, 'nus': (0.7,), 'betas': (0.9, 0.999), 'weight_decay': None, 'rank_candidates': False, 'truncate': -1, 'text_truncate': None, 
+           'label_truncate': None, 'history_reversed': False, 'history_size': -1, 'person_tokens': False, 'split_lines': False, 'use_reply': 'label', 
+           'add_p1_after_newln': False, 'delimiter': '\n', 'history_add_global_end_token': None, 'special_tok_lst': None, 'gpu': -1, 'no_cuda': False, 
+           'dict_file': None, 'dict_initpath': None, 'dict_language': 'english', 'dict_max_ngram_size': -1, 'dict_minfreq': 0, 'dict_maxtokens': -1, 
+           'dict_nulltoken': '__null__', 'dict_starttoken': '__start__', 'dict_endtoken': '__end__', 'dict_unktoken': '__unk__', 'dict_tokenizer': 're', 
+           'dict_lower': False, 'bpe_debug': False, 'dict_textfields': 'text,labels', 'bpe_vocab': None, 'bpe_merge': None, 'bpe_add_prefix_space': None, 
+           'bpe_dropout': None, 'lr_scheduler': 'reduceonplateau', 'lr_scheduler_patience': 3, 'lr_scheduler_decay': 0.5, 'invsqrt_lr_decay_gamma': -1, 
+           'warmup_updates': -1, 'warmup_rate': 0.0001, 'update_freq': 1, 'image_features_dim': 2048, 'image_encoder_num_layers': 1, 'n_image_tokens': 1, 
+           'n_image_channels': 1, 'include_image_token': True, 'image_fusion_type': 'late', 'seq_ul_ratio': 0.5, 'seq_ul_n': 4, 'mask_n': 100, 
+           'ctxt_beta': 0.5, 'crep_pen': 'crep', 'parlai_home': '/home/dell/ParlAI', 
+           'override': {'model_file': '/home/dell/ParlAI/data/models/dialogue_unlikelihood/rep_wiki_ctxt_and_label/model', 
+           'model': 'projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent'}, 'starttime': 'Aug06_03-29'}
+
+
 
 
 #python parlai/scripts/interactive.py -mf zoo:dialogue_unlikelihood/rep_wiki_ctxt_and_label/model -m projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent
@@ -302,6 +366,59 @@ def setup_args(parser=None):
     return parser
 
 
+def choose_models():
+    '''
+    Function for users to choose *up to* 3 models from 5 available to converse with
+    '''
+
+    #list of available models
+    avail_models = ['convai', 'ed', 'bst', 'eli5', 'wow']
+
+    # parameters associated with each model (model options, corresponding agent names, and their labels)
+    model_params = {        
+        
+        'convai': {
+                   'opt': opt_convai,
+                   'agent': 'convai_agent',
+                   'label': 'Convai'
+                  },
+
+        'ed':{
+                   'opt': opt_ed,
+                   'agent': 'ed_agent',
+                   'label': 'Empathetic Dialogues'
+             },
+
+        'bst': { 
+                   'opt': opt_bst,
+                   'agent': 'bst_agent',
+                   'label': 'Blended Skill Talk'
+                },
+        
+        'eli5': {
+                   'opt': opt_eli5,
+                   'agent': 'eli5_agent',
+                   'label': 'ELI5'
+                },
+        
+        'wow': {
+                   'opt': opt_wow,
+                   'agent': 'wow_agent',
+                   'label': 'Wizard of Wikipedia'
+                } 
+    }
+
+    print('Available models:')
+    labels = [model_params[model]['label'] for model in model_params.keys()]
+    
+    for i,v in enumerate(labels, 1):
+        print(i,v)
+
+
+    
+    choice = input('Please choose up to three models to use')
+
+
 def interactive(opt):
 
     if isinstance(opt, ParlaiParser):
@@ -319,12 +436,16 @@ def interactive(opt):
     cv_zoo =  'zoo:pretrained_transformers/model_poly/model'
     ed_zoo = 'zoo:dodecadialogue/empathetic_dialogues_ft/model'
     bst_zoo =  'zoo:blended_skill_talk/bst_single_task/model'
+    eli5_zoo = 'zoo:dialogue_unlikelihood/rep_eli5_ctxt_and_label/model'
+    wow_zoo = 'zoo:dialogue_unlikelihood/rep_wiki_ctxt_and_label/model'
 
     #get path to Convai, Blended skill talk, and Empathetic dialogue model files
 
     cv_model =  modelzoo_path(opt['datapath'], cv_zoo)
     ed_model =  modelzoo_path(opt['datapath'], ed_zoo)
     bst_model = modelzoo_path(opt['datapath'], bst_zoo)
+    eli5_model= modelzoo_path(opt['datapath'], eli5_zoo)
+    wow_model = modelzoo_path(opt['datapath'], wow_zoo)
     
     print(cv_model)
     print(ed_model)
@@ -360,11 +481,33 @@ def interactive(opt):
                 
                 }   
 
+    
+    over_eli5 = {
+                'download_path': opt['download_path'],
+                'datapath': opt['datapath'],
+                'model_file': eli5_model,
+                'parlai_home': opt['parlai_home'],
+                'override': {'model_file': eli5_model,
+                             'model': 'projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent'}
+                
+                }   
+
+    over_wow = {
+                'download_path': opt['download_path'],
+                'datapath': opt['datapath'],
+                'model_file': wow_model,
+                'parlai_home': opt['parlai_home'],
+                'override': {'model_file': wow_model,
+                             'model': 'projects.dialogue_unlikelihood.agents:RepetitionUnlikelihoodAgent'}                
+                } 
+
     #update opt dictionaries
 
     opt_convai.update(over_convai)
     opt_ed.update(over_ed)
     opt_bst.update(over_bst)
+    opt_eli5.update(over_eli5)
+    opt_wow.update(over_wow)
 
     
 
