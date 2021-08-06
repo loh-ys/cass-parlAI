@@ -130,12 +130,13 @@ class CassQuipWorld():
 
         if user_input == 'A':
             # get text of the response from the observation dictionary and store
-            response = self.suggest_dict[0]
-            print(f'Response: {response["text"]}')
+            response = self.suggest_dict[0]            
 
             # store the observation dictionary, and add the model chosen
             self.response = response
             self.response['choice'] = self.model_labels[0]
+
+            print(f'Response: {self.response["text"]}')
 
             #log the choices
             print('Logging choices...')
@@ -144,20 +145,23 @@ class CassQuipWorld():
 
         elif user_input == 'B':
             response = self.suggest_dict[1]
-            print(f'Response: {response["text"]}')
 
             self.response = response
             self.response['choice'] = self.model_labels[1]
+
+            # print responses
+            print(f'Response: {self.response["text"]}')
 
             print('Logging choices...')
             self.log()
         
         elif user_input == 'C':
             response = self.suggest_dict[2]
-            print(f'Response: {response["text"]}')
 
             self.response = response
             self.response['choice'] = self.model_labels[2]
+
+            print(f'Response: {self.response["text"]}')
             
             print('Logging choices...')
             self.log()
@@ -166,14 +170,13 @@ class CassQuipWorld():
             print('Please enter your reply:')
             response = self.human_agent.act()
 
-            print(f'Response: {response["text"]}')
-
             self.response = response
             self.response['choice'] = 'own_input'
 
+            print(f'Response: {self.response["text"]}')
+
             print('Logging choices...')
-            self.log()
-            
+            self.log()            
 
         else:
             print('Invalid input; please only enter A, B, C or D')
@@ -370,53 +373,101 @@ def choose_models():
     '''
     Function for users to choose *up to* 3 models from 5 available to converse with
     '''
-
     #list of available models
     avail_models = ['convai', 'ed', 'bst', 'eli5', 'wow']
 
-    # parameters associated with each model (model options, corresponding agent names, and their labels)
     model_params = {        
         
         'convai': {
-                   'opt': opt_convai,
-                   'agent': 'convai_agent',
-                   'label': 'Convai'
-                  },
+                    'opt': opt_convai,
+                    'agent': 'convai_agent',
+                    'label': 'Convai'
+                    },
 
         'ed':{
-                   'opt': opt_ed,
-                   'agent': 'ed_agent',
-                   'label': 'Empathetic Dialogues'
-             },
+                    'opt': opt_ed,
+                    'agent': 'ed_agent',
+                    'label': 'Empathetic Dialogues'
+                },
 
         'bst': { 
-                   'opt': opt_bst,
-                   'agent': 'bst_agent',
-                   'label': 'Blended Skill Talk'
+                    'opt': opt_bst,
+                    'agent': 'bst_agent',
+                    'label': 'Blended Skill Talk'
                 },
         
         'eli5': {
-                   'opt': opt_eli5,
-                   'agent': 'eli5_agent',
-                   'label': 'ELI5'
+                    'opt': opt_eli5,
+                    'agent': 'eli5_agent',
+                    'label': 'ELI5'
                 },
         
         'wow': {
-                   'opt': opt_wow,
-                   'agent': 'wow_agent',
-                   'label': 'Wizard of Wikipedia'
+                    'opt': opt_wow,
+                    'agent': 'wow_agent',
+                    'label': 'Wizard of Wikipedia'
                 } 
     }
 
     print('Available models:')
     labels = [model_params[model]['label'] for model in model_params.keys()]
-    
     for i,v in enumerate(labels, 1):
         print(i,v)
 
 
-    
+    print(f'''
+
+    To choose a model, enter the number associated with the model. 
+    For instance:
+    1 to choose {labels[0]}
+    2 to choose {labels[1]}, etc.
+
+    To choose multiple models, enter their numbers sequentially
+    For instance:
+    To choose models 1,2 and 4: input 124
+    ''')
     choice = input('Please choose up to three models to use')
+
+    if len(choice) == 0:
+        print('Please select at least one model')
+        choose_models()
+
+    elif len(choice) > 3:
+        print('Please only select up to 3 models')
+        choose_models()
+    else:
+        try:
+            selected_options = [int(i) for i in choice]
+            #options begin at 1, but python uses 0-based indexing
+            model_index = [(i-1) for i in selected_options] 
+
+            #return values if the indices are valid, 
+            #throw exception otherwise
+            if max(selected_options) <= len(avail_models):
+                # use model indices to extract relevant models
+                selected_models = [avail_models[i] for i in model_index]
+
+                #get parameters of these models to return
+                out_params = [model_params[model] for model in selected_models]
+                return(out_params)
+            
+            else:
+                print('One of the chosen models does not exist')
+                choose_models()
+
+        except ValueError:
+            print('Please only input numbers')
+            choose_models()
+        
+
+
+
+
+        
+
+
+
+
 
 
 def interactive(opt):
@@ -447,9 +498,7 @@ def interactive(opt):
     eli5_model= modelzoo_path(opt['datapath'], eli5_zoo)
     wow_model = modelzoo_path(opt['datapath'], wow_zoo)
     
-    print(cv_model)
-    print(ed_model)
-    print(bst_model)
+    
 
     # update convai overrides
     #args to change: download_path, datapath, model_file, parlai_home
@@ -509,16 +558,22 @@ def interactive(opt):
     opt_eli5.update(over_eli5)
     opt_wow.update(over_wow)
 
-    
+    # allow users to choose which models to interact with
+
+    select_model_params = choose_models()    
 
     human_agent = LocalHumanAgent(opt_convai)
-        
-    convai_agent = create_agent(opt_convai, requireModelExists=True)
-    ed_agent = create_agent(opt_ed, requireModelExists=True)
-    bst_agent = create_agent(opt_bst, requireModelExists=True)
 
-    models = [convai_agent, ed_agent, bst_agent]
-    labels = ['CONV AI', 'EMPATHETIC DIALOGUE', 'Blended Skill Talk']
+    models = [create_agent(model['opt'], requireModelExists=True)
+              for model in select_model_params]
+        
+    # convai_agent = create_agent(opt_convai, requireModelExists=True)
+    # ed_agent = create_agent(opt_ed, requireModelExists=True)
+    # bst_agent = create_agent(opt_bst, requireModelExists=True)
+
+    #models = [convai_agent, ed_agent, bst_agent]
+
+    labels = [model['label'] for model in select_model_params]
     
 
     cass_quips = CassQuipWorld(human_agent, models, labels)
@@ -537,7 +592,7 @@ def interactive(opt):
             out_path = cass_quips.log_path + '/recent_chat.csv'
 
             print(f'Exporting chat logs to: {out_path}')
-            cass_quips.out_log.to_csv(out_path, mode = 'a') #a mode: appends to file if it exists
+            cass_quips.out_log.to_csv(out_path, mode = 'a', header = False, index = False) #a mode: appends to file if it exists
             print('Shutting down...')
 
             keep_suggesting = False
@@ -545,7 +600,7 @@ def interactive(opt):
 
     
 
-
+ 
 @register_script('cass_quips', aliases=['cq'])
 class Interactive(ParlaiScript):
     @classmethod
